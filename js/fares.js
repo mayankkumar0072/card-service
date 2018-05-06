@@ -1,4 +1,4 @@
-import transportType from './transport_types';
+import transportType from './transportTypes';
 export default class Fares {
         /**
          * fare is calculated at max fare on entry

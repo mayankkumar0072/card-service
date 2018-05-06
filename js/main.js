@@ -1,6 +1,6 @@
-import Stations from './stations'; 
-import Fares from './fares'; 
-import transportType from './transport_types'; 
+import Stations from './stations';
+import Fares from './fares';
+import transportType from './transportTypes';
 /**
  * Tube Holborn to Earl's Court
  * 328 bus from Earl's Court to Chelsea
@@ -8,41 +8,28 @@ import transportType from './transport_types';
  */
 
 
-let fares = new Fares(); 
+let fares = new Fares();
 
 
-const BUS = new transportType('bus').transportType; 
-const TUBE = new transportType('tube').transportType; 
+const BUS = new transportType('bus').transportType;
+const TUBE = new transportType('tube').transportType;
 
 let passengerJourney = () => {
-    fares.barrierEntry(new Stations('Holborn'), TUBE); 
-    fares.barrierLeave(new Stations("Earl's Court"), TUBE); 
+    fares.barrierEntry(new Stations('Holborn'), TUBE);
+    fares.barrierLeave(new Stations("Earl's Court"), TUBE);
 
-    fares.barrierEntry(new Stations("Earl's Court"), BUS); 
-    fares.barrierLeave(new Stations('Chelsea'), BUS); 
+    fares.barrierEntry(new Stations("Earl's Court"), BUS);
+    fares.barrierLeave(new Stations('Chelsea'), BUS);
 
-    fares.barrierEntry(new Stations("Earl's Court"), TUBE); 
-    fares.barrierLeave(new Stations('Hammersmith'), TUBE); 
+    fares.barrierEntry(new Stations("Earl's Court"), TUBE);
+    fares.barrierLeave(new Stations('Hammersmith'), TUBE);
 
-    fares.calculateFare(); 
+    fares.calculateFare();
 }
 
 
-passengerJourney(); 
+passengerJourney();
 
-let newBalance = fares.currentFare; 
+let newBalance = fares.currentFare;
 
-console.log(newBalance); 
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(newBalance);

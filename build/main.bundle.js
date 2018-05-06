@@ -125,9 +125,9 @@ var _fares = __webpack_require__(3);
 
 var _fares2 = _interopRequireDefault(_fares);
 
-var _transport_types = __webpack_require__(0);
+var _transportTypes = __webpack_require__(0);
 
-var _transport_types2 = _interopRequireDefault(_transport_types);
+var _transportTypes2 = _interopRequireDefault(_transportTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -139,8 +139,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var fares = new _fares2.default();
 
-var BUS = new _transport_types2.default('bus').transportType;
-var TUBE = new _transport_types2.default('tube').transportType;
+var BUS = new _transportTypes2.default('bus').transportType;
+var TUBE = new _transportTypes2.default('tube').transportType;
 
 var passengerJourney = function passengerJourney() {
     fares.barrierEntry(new _stations2.default('Holborn'), TUBE);
@@ -229,9 +229,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _transport_types = __webpack_require__(0);
+var _transportTypes = __webpack_require__(0);
 
-var _transport_types2 = _interopRequireDefault(_transport_types);
+var _transportTypes2 = _interopRequireDefault(_transportTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -269,8 +269,8 @@ var Fares = function () {
         this.enterBarrier = 'BARRIER_ENTRY';
         this.leaveBarrier = 'BARRIER_LEAVE';
 
-        this.BUS = new _transport_types2.default('bus').transportType;
-        this.TUBE = new _transport_types2.default('tube').transportType;
+        this.BUS = new _transportTypes2.default('bus').transportType;
+        this.TUBE = new _transportTypes2.default('tube').transportType;
     }
 
     /**
@@ -395,7 +395,7 @@ var Fares = function () {
                     break;
                 // If no conditions above are met
                 default:
-                    document.body.innerHTML = "No zones detected so deduct the max";
+                    // document.body.innerHTML = "No zones detected so deduct the max";
                     console.log('No zones detected so deduct the max');
                     this.currentFare = this.credit - this.maxFare;
                     break;
