@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -117,17 +117,67 @@ exports.default = TransportTypes;
 "use strict";
 
 
-var _stations = __webpack_require__(2);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var notify = function () {
+  function notify(time) {
+    _classCallCheck(this, notify);
+
+    this.time = time;
+  }
+
+  /**
+   * Notify user about all the events 
+   * @param {String} message
+   */
+
+  _createClass(notify, [{
+    key: "showmessage",
+    value: function showmessage(message) {
+      // console.log(message);
+      var time = this.time;
+      var div = document.createElement("div");
+      div.innerText = message;
+      setTimeout(function () {
+        document.body.appendChild(div);
+      }, time);
+      this.time += 1000;
+    }
+  }]);
+
+  return notify;
+}();
+
+exports.default = new notify(1000);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _stations = __webpack_require__(3);
 
 var _stations2 = _interopRequireDefault(_stations);
 
-var _fares = __webpack_require__(3);
+var _fares = __webpack_require__(4);
 
 var _fares2 = _interopRequireDefault(_fares);
 
 var _transportTypes = __webpack_require__(0);
 
 var _transportTypes2 = _interopRequireDefault(_transportTypes);
+
+var _notify = __webpack_require__(1);
+
+var _notify2 = _interopRequireDefault(_notify);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -158,11 +208,10 @@ var passengerJourney = function passengerJourney() {
 passengerJourney();
 
 var newBalance = fares.currentFare;
-
-console.log(newBalance);
+_notify2.default.showmessage('available newBalance => ' + newBalance);
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -217,7 +266,7 @@ var Stations = function () {
 exports.default = Stations;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -232,6 +281,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _transportTypes = __webpack_require__(0);
 
 var _transportTypes2 = _interopRequireDefault(_transportTypes);
+
+var _notify = __webpack_require__(1);
+
+var _notify2 = _interopRequireDefault(_notify);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -292,6 +345,7 @@ var Fares = function () {
             // Deduct the max fare
             this.currentFare = this.credit - this.maxFare;
 
+            _notify2.default.showmessage('Taking ' + method.type + ' from ' + station._station);
             // If travel is by bus, automatically deduct the bus fare
             if (method.type === this.BUS.type) {
                 this.currentFare = this.currentFare + this.maxFare - this.busJourneyFare;
@@ -311,6 +365,7 @@ var Fares = function () {
         key: 'barrierLeave',
         value: function barrierLeave(station, method) {
             // If travel is by bus, the fare has already been deducted
+            _notify2.default.showmessage('leaving from  ' + station._station);
             if (method.type === this.BUS.type) {
                 return;
             } else {
@@ -361,48 +416,44 @@ var Fares = function () {
 
             var uniqueZones = [].concat(_toConsumableArray(new Set(zones)));
 
-            // * Anywhere in Zone 1               2.50
-            // * Any one zone outside zone 1      2.00
-            // * Any two zones including zone 1   3.00
-            // * Any two zones excluding zone 1   2.25
-            // * Any three zones                  3.20
-            // * Any bus journey                  1.80
-
-            console.log(uniqueZones);
+            //  Anywhere in Zone 1               2.50
+            //  Any one zone outside zone 1      2.00
+            //  Any two zones including zone 1   3.00
+            //  Any two zones excluding zone 1   2.25
+            //  Any three zones                  3.20
+            //  Any bus journey                  1.80
+            _notify2.default.showmessage("Calculating Fare for travelled Zones.....");
 
             switch (uniqueZones) {
                 // Anywhere in Zone 1
                 case uniqueZones.includes("1") && !uniqueZones.includes("2"):
-                    console.log('Anywhere in Zone 1');
+                    _notify2.default.showmessage('Anywhere in Zone 1');
                     this.currentFare = this.credit - 2.50;
                     break;
 
                 // Any two zones including zone 1
                 case uniqueZones.includes("2") && uniqueZones.includes("1") && !uniqueZones.includes("3"):
-                    console.log('Any two zones including zone 1');
+                    _notify2.default.showmessage('Any two zones including zone 1');
                     this.currentFare = this.credit - 2.00;
                     break;
 
                 // Any two zones excluding zone 1
                 case uniqueZones.includes("2") && !uniqueZones.includes("1") && uniqueZones.length > 2:
-                    console.log('Any two zones excluding zone 1');
+                    _notify2.default.showmessage('Any two zones excluding zone 1');
                     this.currentFare = this.credit - 3.00;
                     break;
                 // Any three zones
                 case uniqueZones.includes("1") && uniqueZones.includes("2") && uniqueZones.includes("3"):
-                    console.log('Any three zones');
+                    _notify2.default.showmessage('Any three zones');
                     this.currentFare = this.credit - 3.20;
                     break;
-                // If no conditions above are met
+                // No zone found
                 default:
                     // document.body.innerHTML = "No zones detected so deduct the max";
-                    console.log('No zones detected so deduct the max');
+                    _notify2.default.showmessage('No zones detected so deduct the max');
                     this.currentFare = this.credit - this.maxFare;
                     break;
-
             }
-
-            // TODO: ensure price does not exceed max fare
         }
     }, {
         key: 'currentFare',

@@ -1,6 +1,7 @@
 import Stations from './stations';
 import Fares from './fares';
 import transportType from './transportTypes';
+import notify from './notify';
 /**
  * Tube Holborn to Earl's Court
  * 328 bus from Earl's Court to Chelsea
@@ -31,5 +32,4 @@ let passengerJourney = () => {
 passengerJourney();
 
 let newBalance = fares.currentFare;
-
-console.log(newBalance);
+notify.showmessage(`available newBalance => ${newBalance}`);

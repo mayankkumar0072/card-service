@@ -1,15 +1,24 @@
-import Fares from '../../js/fares'; 
+import Fares from '../../js/fares';
+
+const assert = require('assert');
 
 describe('Fares', function() {
+      let fares = new Fares(30);
+
     it('should create a new instance', function(){
-        let Fares = new Fares(30); 
-    }); 
+        expect(fares instanceof Fares).toBeTruthy();
+    });
 
-    // It should set opening credit to 30
+    it('should create a credit of 30', function(){
+        expect(fares.credit).toBe(30);
+    });
 
-    // Describe Barrier Entry
+    it('should create a BARRIER_ENTRY', function(){
+      expect(fares.enterBarrier).toBe('BARRIER_ENTRY');
+    });
 
-    // Describe Barrier Leave 
+    it('should create a BARRIER_LEAVE', function(){
+        expect(fares.leaveBarrier).toBe('BARRIER_LEAVE');
+    });
 
-
-}); 
+});

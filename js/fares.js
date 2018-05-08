@@ -1,4 +1,5 @@
 import transportType from './transportTypes';
+import notify from './notify';
 export default class Fares {
         /**
          * fare is calculated at max fare on entry
@@ -56,13 +57,12 @@ export default class Fares {
         // Deduct the max fare
         this.currentFare = (this.credit - this.maxFare);
 
-
+         notify.showmessage(`Taking ${method.type} from ${station._station}`);
         // If travel is by bus, automatically deduct the bus fare
         if(method.type === this.BUS.type) {
             this.currentFare = (this.currentFare + this.maxFare) - this.busJourneyFare;
         } else { // If the journey is by tube, push the zones and do the calculation on barrier exit
             this.zonesTravelled.push(station.station);
-
         }
     }
 
@@ -73,6 +73,7 @@ export default class Fares {
      */
     barrierLeave(station, method) {
         // If travel is by bus, the fare has already been deducted
+        notify.showmessage(`leaving from  ${station._station}`);
         if(method.type === this.BUS.type) {
             return;
         } else { // Record the stations the user travelled through
@@ -98,50 +99,44 @@ export default class Fares {
         // Dedupe the zones
         const uniqueZones = [...new Set(zones)];
 
-        // * Anywhere in Zone 1               2.50
-        // * Any one zone outside zone 1      2.00
-        // * Any two zones including zone 1   3.00
-        // * Any two zones excluding zone 1   2.25
-        // * Any three zones                  3.20
-        // * Any bus journey                  1.80
-
-        console.log(uniqueZones);
+        //  Anywhere in Zone 1               2.50
+        //  Any one zone outside zone 1      2.00
+        //  Any two zones including zone 1   3.00
+        //  Any two zones excluding zone 1   2.25
+        //  Any three zones                  3.20
+        //  Any bus journey                  1.80
+        notify.showmessage("Calculating Fare for travelled Zones.....");
 
         switch (uniqueZones) {
             // Anywhere in Zone 1
             case uniqueZones.includes("1") && !uniqueZones.includes("2") :
-                console.log('Anywhere in Zone 1');
+                notify.showmessage('Anywhere in Zone 1');
                 this.currentFare = (this.credit - 2.50);
                 break;
 
             // Any two zones including zone 1
             case uniqueZones.includes("2") && uniqueZones.includes("1") && !uniqueZones.includes("3"):
-                console.log('Any two zones including zone 1');
+                notify.showmessage('Any two zones including zone 1');
                 this.currentFare = (this.credit - 2.00);
                 break;
 
             // Any two zones excluding zone 1
             case uniqueZones.includes("2") && !uniqueZones.includes("1") && uniqueZones.length > 2 :
-                console.log('Any two zones excluding zone 1');
+                notify.showmessage('Any two zones excluding zone 1');
                 this.currentFare = (this.credit - 3.00);
                 break;
             // Any three zones
             case uniqueZones.includes("1") && uniqueZones.includes("2") && uniqueZones.includes("3") :
-                console.log('Any three zones');
+                  notify.showmessage('Any three zones');
                 this.currentFare = (this.credit - 3.20);
                 break;
-            // If no conditions above are met
+            // No zone found
             default :
                 // document.body.innerHTML = "No zones detected so deduct the max";
-                console.log('No zones detected so deduct the max');
+                notify.showmessage('No zones detected so deduct the max');
                 this.currentFare = (this.credit - this.maxFare);
                 break;
-
         }
-
-        // TODO: ensure price does not exceed max fare
-
     }
-
 
 }

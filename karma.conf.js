@@ -5,12 +5,12 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'test/**/*Spec.js',
+      'test/**/*Test.js',
     ],
     preprocessors: {
-      'test/**/*Spec.js': ['webpack'],
+      'test/**/*Test.js': ['webpack'],
     },
-    webpack: webpackConfig, 
+    webpack: webpackConfig,
     reporters: ['mocha'],
     port: 9876,
     colors: true,
